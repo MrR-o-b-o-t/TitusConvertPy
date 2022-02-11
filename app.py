@@ -1,0 +1,81 @@
+import pandas as pd
+from flask import Flask, render_template, request, redirect, url_for, send_from_directory
+import os
+
+# app = Flask(__name__)
+
+
+# @app.route('/')
+# @app.route('/home')
+# def home():
+#     return render_template("index.html")
+
+
+# @app.route('/result', methods=['POST', 'GET'])
+# def result():
+#     output = request.form.to_dict()
+#     print(output)
+#     name = output["name"]
+
+#     return render_template('index.html', name=name)
+
+
+# if __name__ == "__main__":
+#     app.run(debug=True)
+
+
+app = Flask(__name__)
+
+
+@app.route('/')
+@app.route('/home')
+def home():
+    return render_template("index.html")
+
+
+@app.route('/result', methods=['POST', 'GET'])
+def result():
+
+    if request.method == "POST":
+
+        pd.set_option('display.max_rows', None)
+        pd.set_option('display.max_columns', None)
+        pd.set_option('display.width', None)
+        pd.set_option('display.max_colwidth', None)
+
+        # location = 'C:\\Users\\Sam\\Desktop\\pipeline_export\\*.csv'
+        # csv_files = glob.glob(location)
+        csv_file = request.files['file']
+        filename = csv_file.filename
+        csv_file.save(os.path.join("uploads", csv_file.filename))
+
+        df1 = pd.DataFrame()
+
+        df2 = pd.read_csv(csv_file)
+        df1 = pd.concat([df1, df2])
+
+        # df1['Name'] = df2['First Name'] + ' ' + df2['Last Name']
+        df1['Name'] = '=HYPERLINK(' '"' + df2['Profile URL'] + '"' + \
+            ',' + '"' + df2['First Name'] + ' ' + df2['Last Name'] + '"' + ')'
+        df1.insert(0, 'Full Name', df1['Name'])
+        del df1['Last Name']
+        del df1['First Name']
+        del df1['Name']
+        del df1['Profile URL']
+        df1 = df1.fillna('')
+        # df1.to_excel("C:\\Users\\Sam\\Desktop\\convertedexport.xlsx")
+        df1.to_excel(os.path.join("downloads", filename))
+
+        return redirect(url_for('index.html', filename=filename))
+
+        return render_template("/index.html")
+
+
+@app.route("/uploads/<filename>")
+def uploaded_file(filename):
+    filename_processed = 'processed' + '-' + filename
+    return send_from_directory("downloads", filename, as_attachment=True, attachment_filename=filename_processed)
+
+
+if __name__ == "__main__":
+    app.run(debug=True)
