@@ -1,5 +1,5 @@
 import pandas as pd
-from flask import Flask, render_template, request, redirect, url_for, send_from_directory
+from flask import Flask, render_template, request, redirect, url_for, send_from_directory, send_file
 import os
 
 # app = Flask(__name__)
@@ -43,18 +43,15 @@ def result():
         pd.set_option('display.width', None)
         pd.set_option('display.max_colwidth', None)
 
-        # location = 'C:\\Users\\Sam\\Desktop\\pipeline_export\\*.csv'
-        # csv_files = glob.glob(location)
         csv_file = request.files['file']
         filename = csv_file.filename
         csv_file.save(os.path.join("uploads", csv_file.filename))
 
         df1 = pd.DataFrame()
 
-        df2 = pd.read_csv(csv_file)
+        df2 = pd.read_csv("./uploads/pipeline_export.csv")
         df1 = pd.concat([df1, df2])
 
-        # df1['Name'] = df2['First Name'] + ' ' + df2['Last Name']
         df1['Name'] = '=HYPERLINK(' '"' + df2['Profile URL'] + '"' + \
             ',' + '"' + df2['First Name'] + ' ' + df2['Last Name'] + '"' + ')'
         df1.insert(0, 'Full Name', df1['Name'])
@@ -64,11 +61,11 @@ def result():
         del df1['Profile URL']
         df1 = df1.fillna('')
         # df1.to_excel("C:\\Users\\Sam\\Desktop\\convertedexport.xlsx")
-        df1.to_excel(os.path.join("downloads", filename))
-
-        return redirect(url_for('index.html', filename=filename))
-
-        return render_template("/index.html")
+        # convertedFile = df1.to_excel("converted.xlsx")
+        df1.to_excel(os.path.join("./downloads", "convertedFile.xlsx"))
+        return send_file('./downloads/convertedFile.xlsx', as_attachment=True)
+        # return redirect(url_for('index.html', filename=filename))
+        # return render_template("/index.html")
 
 
 @app.route("/uploads/<filename>")
