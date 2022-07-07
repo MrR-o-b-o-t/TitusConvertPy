@@ -107,3 +107,13 @@ option {
     max-width: 200px;
   }
 }
+
+#subBtn{
+  max-width: 50%;
+}
+
+form{
+  display:flex;
+  justify-content: center;
+  text-align: center;
+}

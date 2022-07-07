@@ -65,6 +65,10 @@ def result():
         del df1['First Name']
         del df1['Name']
         del df1['Profile URL']
+        del df1['Headline']
+        del df1['Notes']
+        del df1['Feedback']
+        del df1['Active Project']
         df1 = df1.fillna('')
         # df1.to_excel("C:\\Users\\Sam\\Desktop\\convertedexport.xlsx")
         # convertedFile = df1.to_excel("converted.xlsx")
