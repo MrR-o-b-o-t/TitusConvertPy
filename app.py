@@ -1,36 +1,10 @@
-import mimetypes
+from operator import index
 import pandas as pd
-from flask import Flask, render_template, request, redirect, url_for, send_from_directory, send_file
+from flask import Flask, render_template, request, send_from_directory, send_file
 import os
-
-# app = Flask(__name__)
-
-
-# @app.route('/')
-# @app.route('/home')
-# def home():
-#     return render_template("index.html")
-
-
-# @app.route('/result', methods=['POST', 'GET'])
-# def result():
-#     output = request.form.to_dict()
-#     print(output)
-#     name = output["name"]
-
-#     return render_template('index.html', name=name)
-
-
-# if __name__ == "__main__":
-#     app.run(debug=True)
 
 
 app = Flask(__name__)
-
-
-# @app.route('/favicon.ico')
-# def favicon():
-#     return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico', mimetype='images/favicon.png')
 
 
 @app.route('/')
@@ -70,12 +44,11 @@ def result():
         del df1['Feedback']
         del df1['Active Project']
         df1 = df1.fillna('')
-        # df1.to_excel("C:\\Users\\Sam\\Desktop\\convertedexport.xlsx")
-        # convertedFile = df1.to_excel("converted.xlsx")
+
         df1.to_excel(os.path.join("./downloads", "convertedFile.xlsx"))
+        os.remove('./uploads/pipeline_export.csv')
         return send_file('./downloads/convertedFile.xlsx', as_attachment=True)
-        # return redirect(url_for('index.html', filename=filename))
-        # return render_template("/index.html")
+        # os.remove('./downloads/convertedFile.xlsx')
 
 
 @app.route("/uploads/<filename>")
