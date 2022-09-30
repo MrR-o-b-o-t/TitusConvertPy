@@ -11,15 +11,6 @@
 <body>
 
     <form class="grid" action="/result" method="POST" enctype = "multipart/form-data">
-
-      {% if name %}
-        <center>
-          <h3 style="color: blue;" class="let_space">Hello {{name}}, How was your day!!</h3>
-        </center> 
-
-      {% endif %}
-       
-      
       <label for="name">Uplaod file to convert:</label>
       <input type="file" id="myFile" name="file">
       <input type="submit" id="subBtn">
@@ -27,12 +18,6 @@
       <!-- <center><input class="file_submit" type="Submit"></center> -->
 
     </form>
-
-    
-
-    
-
-    
     <br>
     <br>
     <br>
