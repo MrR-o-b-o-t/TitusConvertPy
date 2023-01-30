@@ -51,7 +51,7 @@ def result():
         # os.remove('./downloads/convertedFile.xlsx')
 
 
-@app.route("/uploads/<filename>")
+@app.route("/static/uploads/<filename>")
 def uploaded_file(filename):
     filename_processed = 'processed' + '-' + filename
     return send_from_directory("./static/downloads", filename, as_attachment=True, attachment_filename=filename_processed)
