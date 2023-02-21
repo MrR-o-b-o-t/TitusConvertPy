@@ -25,11 +25,11 @@ def result():
 
         csv_file = request.files['file']
         filename = csv_file.filename
-        csv_file.save(os.path.join("uploads", csv_file.filename))
+        csv_file.save(os.path.join("./static/uploads", csv_file.filename))
 
         df1 = pd.DataFrame()
 
-        df2 = pd.read_csv("./uploads/pipeline_export.csv")
+        df2 = pd.read_csv("./static/uploads/pipeline_export.csv")
         df1 = pd.concat([df1, df2])
 
         df1['Name'] = '=HYPERLINK(' '"' + df2['Profile URL'] + '"' + \
@@ -45,10 +45,10 @@ def result():
         del df1['Active Project']
         df1 = df1.fillna('')
 
-        df1.to_excel(os.path.join("./downloads", "convertedFile.xlsx"))
-        os.remove('./uploads/pipeline_export.csv')
-        return send_file('./downloads/convertedFile.xlsx', as_attachment=True)
-        # os.remove('./downloads/convertedFile.xlsx')
+        df1.to_excel(os.path.join("./static/downloads", "convertedFile.xlsx"))
+        os.remove('./static/uploads/pipeline_export.csv')
+        return send_file('./static/downloads/convertedFile.xlsx', as_attachment=True)
+        os.remove('./static/downloads/convertedFile.xlsx')
 
 
 @app.route("/uploads/<filename>")
