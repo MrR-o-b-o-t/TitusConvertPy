@@ -1,4 +1,4 @@
-# Titus CSV to Excell Conversion Application
+# Titus CSV to Excel Conversion Application
 
 <br>
 
