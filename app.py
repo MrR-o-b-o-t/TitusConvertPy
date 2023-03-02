@@ -3,9 +3,7 @@ import pandas as pd
 from flask import Flask, render_template, request, send_from_directory, send_file
 import os
 
-
 app = Flask(__name__)
-
 
 @app.route('/')
 @app.route('/home')
