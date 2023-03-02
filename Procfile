@@ -1,1 +1,1 @@
-web: gunicorn "TitusConvertPy:create_app()"
+web: gunicorn wsgi:app
