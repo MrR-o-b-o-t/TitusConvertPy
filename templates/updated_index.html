@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Titus: Lead Converter</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f5f5f5;
+      }
+      .container {
+        max-width: 500px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        margin-top: 5rem;
+      }
+      h1 {
+        text-align: center;
+      }
+      form {
+        margin-top: 20px;
+        text-align: center;
+      }
+      .form-group {
+        margin-bottom: 10px;
+      }
+      .form-group label {
+        display: block;
+        font-weight: bold;
+      }
+      .form-group input[type="file"] {
+        display: none;
+      }
+      .form-group .custom-file-upload {
+        display: inline-block;
+        padding: 8px 12px;
+        cursor: pointer;
+        background-color: #4caf50;
+        color: #fff;
+        border-radius: 4px;
+        transition: background-color 0.3s;
+      }
+      .form-group .custom-file-upload:hover {
+        background-color: #45a049;
+      }
+      .form-group .file-name {
+        margin-left: 10px;
+      }
+      .form-group .convert-btn {
+        margin-top: 10px;
+        padding: 6px 8px;
+        cursor: pointer;
+        background-color: #4caf50;
+        color: #fff;
+        border-radius: 4px;
+        transition: background-color 0.3s;
+        border-color: #fff;
+        font-size: 18px;
+        font-weight: bold;
+      }
+      .form-group .convert-btn:hover {
+        background-color: #45a049;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Titus: Lead Converter</h1>
+      <form action="/convert" method="POST" enctype="multipart/form-data">
+        <div class="form-group">
+          <label for="file-upload" class="custom-file-upload">
+            Upload CSV file
+          </label>
+          <input id="file-upload" type="file" name="file" accept=".csv" />
+          <span class="file-name">No File Selected</span>
+        </div>
+    </br>
+        <div class="form-group">
+          <input type="submit" value="Convert" class="convert-btn" />
+        </div>
+      </form>
+    </div>
+    <script>
+      var fileUpload = document.getElementById("file-upload");
+      var fileName = document.querySelector(".file-name");
+
+      fileUpload.addEventListener("change", function (event) {
+        var file = event.target.files[0];
+        if (file) {
+          fileName.textContent = file.name;
+        } else {
+          fileName.textContent = "No file chosen";
+        }
+      });
+    </script>
+  </body>
+</html>
