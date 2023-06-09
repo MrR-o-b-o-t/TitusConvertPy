@@ -28,6 +28,7 @@
 # if __name__ == '__main__':
 #     app.run(debug=True)
 
+from operator import index
 from flask import Flask, render_template, request, send_file
 import pandas as pd
 
@@ -36,7 +37,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('updated_index.html')
 
 
 @app.route('/convert', methods=['POST'])
