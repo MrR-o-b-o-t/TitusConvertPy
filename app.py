@@ -49,10 +49,16 @@ def convert():
     try:
         df = pd.read_csv(file)
 
-        df['Full Name'] = df['First Name'] + ' ' + df['Last Name']
+        # df['Full Name'] = df['First Name'] + ' ' + df['Last Name']
+        df['Full Name'] = '=HYPERLINK(' '"' + df['Profile URL'] + '"' + \
+            ',' + '"' + df['First Name'] + ' ' + df['Last Name'] + '"' + ')'
 
-        df.drop(['First Name', 'Last Name', 'Headline'], axis=1, inplace=True)
+        df.drop(['First Name', 'Last Name', 'Headline',
+                'Notes', 'Profile URL', 'Active Project'], axis=1, inplace=True)
         df.set_index('Full Name', inplace=True)
+        titles = list(df.columns)
+        titles[1], titles[2] = titles[2], titles[1]
+        df = df[titles]
         df.dropna(axis=1, how='all', inplace=True)
         output_file = 'output.xlsx'
         df.to_excel(output_file)
